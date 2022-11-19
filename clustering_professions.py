@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import dict_words
 
-vac_names_csv = pd.read_csv('original_professions_names.csv')
+vac_names_csv = pd.read_csv('original_preproces_professions_names.csv')
 
 
 def percent(value, all):
@@ -22,7 +22,7 @@ vac_names_csv['prof_name'] = vac_names_csv['name'].apply(lambda x: define_prof(x
 print('Общее количество вакансий: ' + str(len(vac_names_csv.index)))
 
 prof_groups_vac = vac_names_csv.groupby(['prof_name'])
-print('Количество профессий: ' + str(len(prof_groups_vac)))
+print('Количество профессий: ' + str(len(prof_groups_vac) - 1))
 
 undefined_vac = prof_groups_vac.get_group('Неизвестная профессия')[['name']]
 print('Распределено вакансий: ' + percent(len(vac_names_csv.index) - len(undefined_vac.index), len(vac_names_csv.index)))
@@ -102,8 +102,16 @@ def efficiency_plus_minus_words_in_prof(prof_name):
     minus_words_ser = pd.concat([minus_words_ser, minus_words_ser.apply(lambda x: percent(x, len(filtered_vacancies)))], axis=1)
     minus_words_ser.to_csv("minus_words_in_prof.csv", header=False)
 
+    filtred_plus_words_dict = {key: value for key, value in plus_words_dict.items() if value > 1}
+    print(f'\'{prof_name}\': {filtred_plus_words_dict},')
 
-# frequency_undefined_words(30, 7).to_csv("frequency_undefined_words.csv", header=False)
-# undefined_vac_with_word('препод').to_csv("undefined_vac_with_word.csv", header=False, index=False)
-# vac_in_prof('Администратор баз данных')
-efficiency_plus_minus_words_in_prof('Инженер')
+
+frequency_undefined_words(30, 15).to_csv("frequency_undefined_words.csv", header=False)
+undefined_vac_with_word('менеджер').to_csv("castom_frequency.csv", header=False)
+# undefined_vac_with_word('менеджер по').to_csv("undefined_vac_with_word.csv", header=False, index=False)
+vac_in_prof('Email-маркетолог')
+
+# for prof in dict_words.plus_words.keys():
+#     efficiency_plus_minus_words_in_prof(prof)
+
+efficiency_plus_minus_words_in_prof('Менеджер IT-проекта')
