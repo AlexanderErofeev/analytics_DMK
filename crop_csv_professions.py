@@ -14,11 +14,6 @@ for file in sorted(file_list):
     csv_list.append(pd.read_csv(file, usecols=keep_col))
 
 csv_merged = pd.concat(csv_list, ignore_index=True)
-
-# csv_merged = csv_merged.dropna()  # Удаляем неполностью заполненные строки, в любой колонке
-# print(len(csv_merged.index))
-
-csv_merged['name'] = csv_merged['name'].apply(lambda x: x.lower())
 print(len(csv_merged.index))
 
 csv_merged.to_csv("professions_names.csv", index=False)

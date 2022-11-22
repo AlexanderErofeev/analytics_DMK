@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import dict_words
 
-vac_names_csv = pd.read_csv('original_preproces_professions_names.csv')
+vac_names_csv = pd.read_csv('vacancies_preprocessed_original.csv')
 
 
 def percent(value, all):
@@ -18,7 +18,8 @@ def define_prof(vac_name):
     return 'Неизвестная профессия'
 
 
-vac_names_csv['prof_name'] = vac_names_csv['name'].apply(lambda x: define_prof(x))
+vac_names_csv['prof_name'] = vac_names_csv['name'].apply(define_prof)
+vac_names_csv.to_csv('vacancies_classified.csv', index=False)
 print('Общее количество вакансий: ' + str(len(vac_names_csv.index)))
 
 prof_groups_vac = vac_names_csv.groupby(['prof_name'])
@@ -71,7 +72,7 @@ def frequency_undefined_words(count, count_extra_words):   # Функции и �
 
     new_data = pd.Series(undefined_words.index)\
         .apply(lambda x: frequency_words(undefined_vac_with_word(x)).apply(lambda y: percent(y, undefined_words[x])).head(count_extra_words).to_dict())\
-        .apply(lambda x: dict_to_list(x))\
+        .apply(dict_to_list)\
         .apply(lambda x: pd.Series(x, copy=False))
     new_data.index = undefined_words.index
 
@@ -81,7 +82,7 @@ def frequency_undefined_words(count, count_extra_words):   # Функции и �
 def vac_in_prof(prof_name):
     ser_ans = prof_groups_vac.get_group(prof_name)['name']
     ser_ans = ser_ans.sort_values()
-    ser_ans.to_csv("vac_in_prof.csv", header=False, index=False)
+    ser_ans.to_csv("Debug data\\vac_in_prof.csv", header=False, index=False)
 
 
 def efficiency_plus_minus_words_in_prof(prof_name):
@@ -94,24 +95,17 @@ def efficiency_plus_minus_words_in_prof(prof_name):
     filtered_vacancies = list(filter(lambda x: any([plus_word in x for plus_word in plus_words]), vacancies))
     minus_words_dict = {minus_word: len(list(filter(lambda x: minus_word in x, filtered_vacancies))) for minus_word in minus_words}
 
-    pd.Series(plus_words_dict)\
+    pd.Series(plus_words_dict, dtype='int64')\
         .sort_values(ascending=False)\
-        .to_csv("plus_words_in_prof.csv", header=False)
+        .to_csv("Debug data\\plus_words_in_prof.csv", header=False)
 
-    minus_words_ser = pd.Series(minus_words_dict).sort_values(ascending=False)
+    minus_words_ser = pd.Series(minus_words_dict, dtype='int64').sort_values(ascending=False)
     minus_words_ser = pd.concat([minus_words_ser, minus_words_ser.apply(lambda x: percent(x, len(filtered_vacancies)))], axis=1)
-    minus_words_ser.to_csv("minus_words_in_prof.csv", header=False)
-
-    filtred_plus_words_dict = {key: value for key, value in plus_words_dict.items() if value > 1}
-    print(f'\'{prof_name}\': {filtred_plus_words_dict},')
+    minus_words_ser.to_csv("Debug data\\minus_words_in_prof.csv", header=False)
 
 
-frequency_undefined_words(30, 15).to_csv("frequency_undefined_words.csv", header=False)
-undefined_vac_with_word('менеджер').to_csv("castom_frequency.csv", header=False)
-# undefined_vac_with_word('менеджер по').to_csv("undefined_vac_with_word.csv", header=False, index=False)
-vac_in_prof('Email-маркетолог')
+frequency_undefined_words(30, 15).to_csv("Debug data\\frequency_undefined_words.csv", header=False)
+# undefined_vac_with_word('разработчик').to_csv("Debug data\\castom_frequency.csv", header=False)
+# vac_in_prof('Специалист')
 
-# for prof in dict_words.plus_words.keys():
-#     efficiency_plus_minus_words_in_prof(prof)
-
-efficiency_plus_minus_words_in_prof('Менеджер IT-проекта')
+# efficiency_plus_minus_words_in_prof('Мусор')
