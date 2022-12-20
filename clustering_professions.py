@@ -104,8 +104,8 @@ def efficiency_plus_minus_words_in_prof(prof_name):
     minus_words_ser.to_csv("Debug data\\minus_words_in_prof.csv", header=False)
 
 
-frequency_undefined_words(30, 15).to_csv("Debug data\\frequency_undefined_words.csv", header=False)
-# undefined_vac_with_word('разработчик').to_csv("Debug data\\castom_frequency.csv", header=False)
+# frequency_undefined_words(30, 15).to_csv("Debug data\\frequency_undefined_words.csv", header=False)
+# frequency_words(undefined_vac_with_word('менеджер')).to_csv("Debug data\\castom_frequency.csv", header=False)
 # vac_in_prof('Специалист')
 
-# efficiency_plus_minus_words_in_prof('Мусор')
+efficiency_plus_minus_words_in_prof('Web-разработчик')
