@@ -14,6 +14,6 @@ for file in sorted(file_list):
     csv_list.append(pd.read_csv(file, usecols=keep_col))
 
 csv_merged = pd.concat(csv_list, ignore_index=True).reindex(columns=keep_col)
-print(len(csv_merged.index))
+print(f"Суммарное количество вакансий: {len(csv_merged.index)}")
 
 csv_merged.to_csv("vacancies.csv", index=False)

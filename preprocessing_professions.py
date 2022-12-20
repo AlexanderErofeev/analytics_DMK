@@ -3,7 +3,7 @@ import pandas as pd
 import re
 
 csv_merged = pd.read_csv('vacancies.csv')
-print(len(csv_merged.index))
+print(f"Количество вакансий до предобработки: {len(csv_merged.index)}")
 
 # a = csv_merged[['salary_currency']]\
 #     .drop_duplicates(subset=['salary_currency'], keep='first')\
@@ -32,13 +32,9 @@ def converter_to_rubles(value, currency, date):
         return int(value * df_currency[currency][date])
 
 
-def tested(ser):
-    ser = ser.to_dict()
-    return ser['salary_from'], ser['salary_to'], ser['salary_currency'], ser['published_at']
-
-
 def rub_salary(ser):
-    salary_from, salary_to, salary_currency, date = tested(ser)
+    ser = ser.to_dict()
+    salary_from, salary_to, salary_currency, date = ser['salary_from'], ser['salary_to'], ser['salary_currency'], ser['published_at']
     avg_salary = get_avg_salary(salary_to, salary_from)
     if avg_salary is not None and salary_currency is not None:
         if salary_currency == 'RUR':
@@ -55,7 +51,7 @@ csv_merged['name'] = csv_merged['name']\
     .apply(lambda x: ' '.join(re.sub(r"[^\w+#]|[_023456789]", ' ', x).split()))  # r"[-_!/:();'\".,\\\[\]023456789«»–|—?&*]"
 
 csv_merged = csv_merged[csv_merged['name'].str.len() != 0]
-print(len(csv_merged.index))
+print(f"Количество вакансий после удаления вакансий с пустыми \'name\': {len(csv_merged.index)}")
 
 csv_merged['published_at'] = csv_merged['published_at'].apply(lambda x: x[:7])
 
