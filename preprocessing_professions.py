@@ -1,16 +1,8 @@
 import math
 import pandas as pd
 import re
-
-csv_merged = pd.read_csv('vacancies.csv')
-print(f"Количество вакансий до предобработки: {len(csv_merged.index)}")
-
-# a = csv_merged[['salary_currency']]\
-#     .drop_duplicates(subset=['salary_currency'], keep='first')\
-#     .dropna()
-# a['count'] = a['salary_currency'].apply(lambda x: len(csv_merged[csv_merged['salary_currency'] == x].index))
-# print(a)
-# print(a['salary_currency'].tolist())
+import swifter
+from swifter import set_defaults
 
 
 def get_avg_salary(salary_from, salary_to):
@@ -45,20 +37,26 @@ def rub_salary(ser):
         return None
 
 
-# Переводим в нижний регистр, удаляем лишние символы у названий
-csv_merged['name'] = csv_merged['name']\
-    .str.lower()\
-    .apply(lambda x: ' '.join(re.sub(r"[^\w+#]|[_023456789]", ' ', x).split()))  # r"[-_!/:();'\".,\\\[\]023456789«»–|—?&*]"
+if __name__ == '__main__':
+    set_defaults(npartitions=32, progress_bar=False)
 
-csv_merged = csv_merged[csv_merged['name'].str.len() != 0]
-print(f"Количество вакансий после удаления вакансий с пустыми \'name\': {len(csv_merged.index)}")
+    csv_merged = pd.read_csv('vacancies.csv')
+    print(f"Количество вакансий до предобработки: {len(csv_merged.index)}")
 
-csv_merged['published_at'] = csv_merged['published_at'].apply(lambda x: x[:7])
+    # Переводим в нижний регистр, удаляем лишние символы у названий
+    csv_merged['name'] = csv_merged['name']\
+        .str.lower()\
+        .swifter.allow_dask_on_strings().apply(lambda x: ' '.join(re.sub(r"[^\w+#]|[_023456789]", ' ', x).split()))
 
-df_currency = pd.read_csv('Currencies\\currency_per_year.csv', index_col='date')
-csv_merged['rub_salary'] = csv_merged.apply(rub_salary, axis=1)
+    csv_merged = csv_merged[csv_merged['name'].str.len() != 0]
+    print(f"Количество вакансий после удаления вакансий с пустыми \'name\': {len(csv_merged.index)}")
 
-csv_merged['year'] = csv_merged['published_at'].apply(lambda x: x[:4])
-csv_merged[['name', 'rub_salary', 'year']].to_csv("vacancies_preprocessed.csv", index=False)
+    csv_merged['published_at'] = csv_merged['published_at'].str[:7]
 
-# print(len(csv_merged[['rub_salary']].dropna().index))
+    df_currency = pd.read_csv('Currencies\\currency_per_year.csv', index_col='date')
+    csv_merged['rub_salary'] = csv_merged[['salary_from', 'salary_to', 'salary_currency', 'published_at']].swifter.allow_dask_on_strings().apply(rub_salary, axis=1)
+
+    csv_merged['year'] = csv_merged['published_at'].str[:4]
+    csv_merged[['name', 'rub_salary', 'year']].to_csv("vacancies_preprocessed.csv", index=False)
+
+    # print(len(csv_merged[['rub_salary']].dropna().index))
