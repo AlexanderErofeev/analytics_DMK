@@ -1,13 +1,10 @@
-import math
-
 import pandas as pd
 
-data = pd.read_csv('vacancies_classified.csv')
+data = pd.read_csv('vacancies_classified.csv', usecols=['rub_salary', 'year', 'prof_name'])
 
 data = data.groupby(['prof_name']) \
     .apply(lambda x: x.groupby(['year']))
 
-# print(data['Системный администратор'].get_group(2005)['rub_salary'].median())
 
 count_stat = data.apply(lambda x: x.apply(lambda y: len(y)))\
     .fillna(0)\

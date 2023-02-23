@@ -2,13 +2,7 @@ import multiprocessing
 import numpy as np
 import pandas as pd
 import dict_words
-
-
-PROCESSOR_COUNT = 16
-
-
-def percent(value, all):
-    return str(round((value / all) * 100, 2)) + '%'
+from global_settings_and_functions import PROCESSOR_COUNT, percent
 
 
 def is_tuple_in_str(tuple, str):
@@ -73,7 +67,7 @@ def frequency_undefined_words(count, count_extra_words):  # Функции и и
 def vac_in_prof(prof_name):
     ser_ans = prof_groups_vac.get_group(prof_name)['name']
     ser_ans = ser_ans.sort_values()
-    ser_ans.to_csv("Debug data\\vac_in_prof.csv", header=False, index=False)
+    ser_ans.to_csv("Debug data\\Professions debug\\vac_in_prof.csv", header=False, index=False)
 
 
 def efficiency_plus_minus_words_in_prof(prof_name):
@@ -89,11 +83,11 @@ def efficiency_plus_minus_words_in_prof(prof_name):
 
     pd.Series(plus_words_dict, dtype='int64') \
         .sort_values(ascending=False) \
-        .to_csv("Debug data\\plus_words_in_prof.csv", header=False)
+        .to_csv("Debug data\\Professions debug\\plus_words_in_prof.csv", header=False)
 
     minus_words_ser = pd.Series(minus_words_dict, dtype='int64').sort_values(ascending=False)
     minus_words_ser = pd.concat([minus_words_ser, minus_words_ser.apply(lambda x: percent(x, len(filtered_vacancies)))], axis=1)
-    minus_words_ser.to_csv("Debug data\\minus_words_in_prof.csv", header=False)
+    minus_words_ser.to_csv("Debug data\\Professions debug\\minus_words_in_prof.csv", header=False)
 
 
 if __name__ == '__main__':
@@ -122,8 +116,8 @@ if __name__ == '__main__':
     count_prof_names.to_csv("count_professions_names.csv", header=False)
     print('Контрольная сумма вакансий: ' + str(count_prof_names.sum()))
 
-    # frequency_undefined_words(30, 15).to_csv("Debug data\\frequency_undefined_words.csv", header=False)
-    # frequency_words(undefined_vac_with_word('разработчик')).to_csv("Debug data\\castom_frequency.csv", header=False)
+    # frequency_undefined_words(30, 15).to_csv("Debug data\\Professions debug\\frequency_undefined_words.csv", header=False)
+    # frequency_words(undefined_vac_with_word('разработчик')).to_csv("Debug data\\Professions debug\\castom_frequency.csv", header=False)
     # vac_in_prof('SMM-специалист')
     #
     # efficiency_plus_minus_words_in_prof('SMM-специалист')

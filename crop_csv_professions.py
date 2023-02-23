@@ -4,7 +4,7 @@ import pandas as pd
 
 path = "HH\\"
 # keep_col = ['name', 'description', 'key_skills', 'experience_id', 'premium', 'employer_name', 'salary_from', 'salary_to', 'salary_gross', 'salary_currency', 'area_name', 'published_at']
-keep_col = ['id', 'name', 'salary_from', 'salary_to', 'salary_currency', 'published_at']
+keep_col = ['id', 'name', 'key_skills', 'salary_from', 'salary_to', 'salary_currency', 'published_at']
 
 
 def opened(file):
