@@ -10,3 +10,10 @@ def sum_mas(list_lists):
     for el in list_lists:
         mas += el
     return mas
+
+
+def sum_dict(list_dict):
+    dict_ans = {}
+    for el_dict in list_dict:
+        dict_ans.update(el_dict)
+    return dict_ans

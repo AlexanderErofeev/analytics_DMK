@@ -1,7 +1,7 @@
 import multiprocessing
 import pandas as pd
 from dict_skill import dict_skill
-from global_settings_and_functions import PROCESSOR_COUNT, percent, sum_mas
+from global_settings_and_functions import PROCESSOR_COUNT, percent, sum_mas, sum_dict
 
 
 def invert_dict(input_dict):
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     unique_skills = list(set(skills))
     print(f"Всего уникальных скилов: {len(unique_skills)}")
 
-    tr_dict = invert_dict(dict_skill)
+    tr_dict = invert_dict(sum_dict(list(dict_skill.values())))
 
     vac_csv['key_skills'] = vac_csv['key_skills'].apply(define_vac_skills)
     vac_csv.to_csv('vacancies_and_skill_classified.csv', index=False)
