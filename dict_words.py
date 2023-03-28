@@ -1,6 +1,6 @@
 minus_words = \
     {
-        'Преподователь': [],
+        'Преподаватель': [],
         'Embedded-разработчик': ['руководитель', 'qa', 'manager', 'lead', 'teamlead', 'тест', 'team lead', 'test',
                                  'leader'],
         'Инженер-программист': ['1с', 'manager', 'директор', 'unity', 'руководитель', 'qa', '1c', 'микроконтрол',
@@ -15,6 +15,10 @@ minus_words = \
         'Web-разработчик': ['manager', '1с', 'директор', 'tutor', 'unity', 'руководитель', 'qa', '1c', 'teamlead',
                             'аналитик', 'препод', 'менеджер', 'lead', 'оператор', 'дизайнер', 'тест', 'designer',
                             'leader', 'тимлид', 'тим лид', '1 c', '1 с', 'баз данн', 'team lead', 'test', 'game'],
+        'Верстальщик': ['репетитор', 'manager', '1с', 'тьютор', 'директор', 'преподаватель', 'tutor', 'unity',
+                                 'руководитель', 'qa', '1c', 'jsoc', 'teamlead', 'препод', 'оператор', 'lead', 'тест',
+                                 'director', 'leader', 'quality assurance', 'тимлид', 'тим лид', '1 с', 'баз данн',
+                                 'team lead', 'test', 'game', 'северсталь'],
         'Frontend-программист': ['репетитор', 'manager', '1с', 'тьютор', 'директор', 'преподаватель', 'tutor', 'unity',
                                  'руководитель', 'qa', '1c', 'jsoc', 'teamlead', 'препод', 'оператор', 'lead', 'тест',
                                  'director', 'leader', 'quality assurance', 'тимлид', 'тим лид', '1 с', 'баз данн',
@@ -49,14 +53,14 @@ minus_words = \
         'Тестировщик (QA-инженер)': ['тимлид', 'руководитель', 'тим лид', 'директор', 'lead', 'teamlead', 'team lead',
                                      'director', 'leader'],
         'Специалист техподдержки': ['1с'],
-        'Инженер': ['software', 'frontend', 'dba', 'manager', 'python', 'programmer', 'admin', 'site', 'js', 'it',
-                    'data', 'voip', 'support', 'директор', 'бдд', 'ml', 'full stack', 'scala', 'framework', 'graph',
-                    'devops', 'developer', 'руководитель', 'scient', 'qa', 'oracle', 'hpc', 'sysop', '1c', 'android',
-                    'ит', 'dev', 'teamlead', 'linux', 'систем', 'compil', 'web', '1с', 'java', 'micros', 'backend',
-                    'внедрен', 'cloud', 'network', 'security', 'desktop', 'video', 'lead', 'mobile', 'embed',
-                    'информаци', 'тест', 'c#', 'director', 'leader', 'quality assurance', 'тимлид', 'toolchain', 'php',
-                    'поддрежк', 'лидер', 'программист', 'разработчик', 'team lead', 'test', 'ios', 'cv',
-                    'system', 'rnd'],
+        # 'Инженер': ['software', 'frontend', 'dba', 'manager', 'python', 'programmer', 'admin', 'site', 'js', 'it',
+        #             'data', 'voip', 'support', 'директор', 'бдд', 'ml', 'full stack', 'scala', 'framework', 'graph',
+        #             'devops', 'developer', 'руководитель', 'scient', 'qa', 'oracle', 'hpc', 'sysop', '1c', 'android',
+        #             'ит', 'dev', 'teamlead', 'linux', 'систем', 'compil', 'web', '1с', 'java', 'micros', 'backend',
+        #             'внедрен', 'cloud', 'network', 'security', 'desktop', 'video', 'lead', 'mobile', 'embed',
+        #             'информаци', 'тест', 'c#', 'director', 'leader', 'quality assurance', 'тимлид', 'toolchain', 'php',
+        #             'поддрежк', 'лидер', 'программист', 'разработчик', 'team lead', 'test', 'ios', 'cv',
+        #             'system', 'rnd'],
         'Аналитик': ['тимлид', 'руководитель', 'тим лид', 'директор', 'lead', 'teamlead', 'team lead', 'director',
                      'leader'],
         'Специалист по информационной безопасности': ['тимлид', 'руководитель', 'директор', 'lead', 'teamlead',
@@ -108,7 +112,7 @@ minus_words = \
         'Маркетолог': ['dev', 'аналитик', 'верстальщик', 'front'],
         'SEO-специалист': [],
         'SMM-специалист': [],
-        # 'E-mail маркетолог': [],
+        'E-mail маркетолог': [],
         'C#': ['qa', 'test', 'тест', 'quality assurance', 'препод', 'tutor', 'тьютор', 'репетитор', 'репититор',
                'учитель', 'backend', 'бэкэнд', 'game', 'игр', 'unity', 'team lead', 'тимлид', 'тим лид', 'teamlead',
                'lead', 'менджер', 'manager', 'руководитель', 'директор', 'leader', 'director', '1c', '1с', 'game',
@@ -137,27 +141,27 @@ minus_words = \
         # 'SQL': ['manager', '1с', 'директор', 'tutor', 'unity', 'руководитель', 'qa', '1c', 'teamlead', 'препод',
         #         'оператор', 'lead', 'тест', 'director', 'leader', 'тимлид', 'тим лид', '1 c', '1 с', 'баз данн',
         #         'team lead', 'test', 'game'],
-        'Программист': ['репетитор', 'frontend', 'manager', '1с', 'пхп', 'c sharp', 'js', 'python', 'тьютор', 'game',
-                        'директор', 'ruby', 'мобиль', ' си ', 'питон', 'tutor', 'инженер программист', 'рнр', 'unity',
-                        'руководитель', 'инженер', 'qa', '1c', 'фулстэк', 'микроконтрол', 'с#', 'android', 'javascript',
-                        'front', 'версталь', 'teamlead', 'фронтенд', 'sharepoint', 'web', 'java', 'backend', 'delphi',
-                        'бэкэнд', 'вёрстка', 'веб', 'препод', 'sql', 'lead', 'mobile', 'оператор', 'fullstack',
-                        'бэкенд', 'engineer', 'тест', 'microcontr', 'frontеnd', 'c#', 'director', 'leader',
-                        'quality assurance', 'тимлид', 'php', 'тим лид', 'системный программист', 'андроид', 'руби',
-                        '1 c', '1 с', 'баз данн', 'ios', 'team lead', 'test', 'мобайл', 'системный', 'system prog'],
+        # 'Программист': ['репетитор', 'frontend', 'manager', '1с', 'пхп', 'c sharp', 'js', 'python', 'тьютор', 'game',
+        #                 'директор', 'ruby', 'мобиль', ' си ', 'питон', 'tutor', 'инженер программист', 'рнр', 'unity',
+        #                 'руководитель', 'инженер', 'qa', '1c', 'фулстэк', 'микроконтрол', 'с#', 'android', 'javascript',
+        #                 'front', 'версталь', 'teamlead', 'фронтенд', 'sharepoint', 'web', 'java', 'backend', 'delphi',
+        #                 'бэкэнд', 'вёрстка', 'веб', 'препод', 'sql', 'lead', 'mobile', 'оператор', 'fullstack',
+        #                 'бэкенд', 'engineer', 'тест', 'microcontr', 'frontеnd', 'c#', 'director', 'leader',
+        #                 'quality assurance', 'тимлид', 'php', 'тим лид', 'системный программист', 'андроид', 'руби',
+        #                 '1 c', '1 с', 'баз данн', 'ios', 'team lead', 'test', 'мобайл', 'системный', 'system prog'],
         'ML разработчик': [],
 
         'Мусор': [],
         'Оператор станков чпу': [],
 
         'Языки программирования': [],
-        'Специалист': [],
-        'Менеджер': []
+        # 'Специалист': [],
+        # 'Менеджер': []
     }
 
 plus_words = \
     {
-        'Преподователь': ['препод', 'учитель', 'tutor', 'тьютор', 'репетитор', 'методист', 'обуч', 'тренер'], #soft
+        'Преподаватель': ['препод', 'учитель', 'tutor', 'тьютор', 'репетитор', 'методист', 'обуч', 'тренер'], #soft
 
         'Embedded-разработчик': ['microcontr', 'микроконтрол', 'embedded'], #hard
         'Инженер-программист': [['инженер', 'программист'], ['it', 'инженер'],#soft
@@ -175,8 +179,9 @@ plus_words = \
                             ['drupal', 'develop'], ['cms', 'develop'], ['специалист', 'wp'],
                             ['wordpress', 'develop'], ['wp', 'develop'], ['joomla', 'develop'],
                             ['bitrix', 'develop'], ['bitrix', 'специалист'], ['специалист', 'drupal']],
-        'Frontend-программист': ['frontend', 'фронтенд', 'вёрстка', 'верстка', 'верста', 'front end',#soft
-                                 'angular', 'html', 'css', 'react', 'vue'],
+        'Верстальщик': ['html', 'css', 'вёрстка', 'верстка', 'верста'],
+        'Frontend-программист': ['frontend', 'фронтенд', 'front end',#soft
+                                 'angular', 'react', 'vue'],
         'Backend-программист': ['backend', 'бэкэнд', 'бэкенд', 'бекенд', 'бекэнд', 'back end', 'бэк энд', 'бэк енд',#soft
                                 'django', 'flask', 'laravel', 'yii', 'symfony'],
         'Fullstack-программист': ['fullstack', 'фулстак', 'фуллтак', 'фуллстэк', 'фулстэк', 'full stack'],#soft
@@ -291,7 +296,7 @@ plus_words = \
         'SEO-специалист': ['seo', 'sео'], # soft
         'SMM-специалист': ['smm', 'смм', 'таргетолог', 'cmm', 'cмм', # soft
                            ['social', 'media']],
-        # 'E-mail маркетолог': ['e mail', 'e-mail', 'email'],
+        'E-mail маркетолог': ['e mail', 'e-mail', 'email'],
 
         'C#': ['c#', 'c sharp', 'шарп', 'с#'], #SOFT
         'C C++': ['c++', 'с++'],
@@ -318,10 +323,10 @@ plus_words = \
         'Оператор станков чпу': ['чпу', 'асу', 'cnc' 'dcs', 'acs', 'apcs'], #hard
 
         'Языки программирования': ['scala', 'go', 'vba', 'perl', 'rlang', 'swift', 'typescript', 'flash', 'cotlin', 'visual basic', 'pascal'], #soft
-        'Инженер': ['engineer', 'инженер', 'інженер', 'инженер'],
-        'Программист': ['programmer', 'программист', 'разработчик', 'developer'],
-        'Специалист': ['специалист', 'specialist'],
-        'Менеджер': ['менеджер', 'manager']
+        # 'Инженер': ['engineer', 'инженер', 'інженер', 'инженер'],
+        # 'Программист': ['programmer', 'программист', 'разработчик', 'developer'],
+        # 'Специалист': ['специалист', 'specialist'],
+        # 'Менеджер': ['менеджер', 'manager']
     }
 
 hardware = ['Embedded-разработчик', 'Менеджер HardWare', 'Менеджер обслуживания оборудования', 'Инженер-электросвязи',
