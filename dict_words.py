@@ -27,7 +27,7 @@ minus_words = \
                                 'руководитель', 'qa', '1c', 'sdet', 'teamlead', 'учитель', 'data scientist', 'препод',
                                 'оператор', 'lead', 'sql', 'тест', 'director', 'leader', 'quality assurance', 'тимлид',
                                 'cms', 'тим лид', '1 с', 'баз данн', 'team lead', 'test', 'game'],
-        'Fullstack-developer': ['unity', 'тимлид', 'руководитель', 'qa', 'manager', '1c', '1с', 'game', 'препод',
+        'Fullstack-разработчик': ['unity', 'тимлид', 'руководитель', 'qa', 'manager', '1c', '1с', 'game', 'препод',
                                   'директор', 'lead', 'оператор', 'teamlead', 'тест', 'team lead', 'test', 'tutor',
                                   'leader'],
         'Разработчик мобильных приложений': ['manager', 'python', '1с', 'тьютор', 'автор', 'директор', 'механик', 'бизнес', 'unity',
@@ -45,9 +45,9 @@ minus_words = \
                                      'руководитель', 'qa', '1c', 'teamlead', 'backend', 'erp', 'препод',
                                      'lead', 'тест', 'director', 'leader', 'quality assurance', 'тимлид',
                                      '1 c', '1 с', 'team lead', 'test', 'game'],
-        'Devops-engineer': ['тимлид', 'руководитель', 'директор', 'lead', 'teamlead', 'преподаватель', 'team lead',
+        'Devops-инженер': ['тимлид', 'руководитель', 'директор', 'lead', 'teamlead', 'преподаватель', 'team lead',
                            'director', 'leader'],
-        'Data Scientist': ['руководитель', 'qa', 'директор', 'lead', 'teamlead', 'тест', 'team lead',
+        'Data scientist': ['руководитель', 'qa', 'директор', 'lead', 'teamlead', 'тест', 'team lead',
                                          'director', 'leader'],
         'Системный администратор': ['devops', 'тех поддержка', 'техподдержка'],
         'QA-инженер': ['тимлид', 'руководитель', 'тим лид', 'директор', 'lead', 'teamlead', 'team lead',
@@ -71,7 +71,7 @@ minus_words = \
         '1C-программист': ['тимлид', 'руководитель', 'тим лид', 'директор', 'lead', 'teamlead', 'team lead', 'leader'],
         'SAP-консультант': [],
         # 'Oracle-разработчик': [],
-        'Разработчик игр (GameDev)': ['quality assurance', 'тимлид', 'руководитель', 'иллюстратор', 'qa', 'дизайн',
+        'Разработчик игр': ['quality assurance', 'тимлид', 'руководитель', 'иллюстратор', 'qa', 'дизайн',
                                       'директор', 'lead', 'teamlead', 'design', 'тест', 'team lead', 'test', 'director',
                                       'leader'],
         'Руководитель ИТ-проектов': [],
@@ -149,7 +149,7 @@ minus_words = \
                         'бэкенд', 'engineer', 'тест', 'microcontr', 'frontеnd', 'c#', 'director', 'leader',
                         'quality assurance', 'тимлид', 'php', 'тим лид', 'системный программист', 'андроид', 'руби',
                         '1 c', '1 с', 'баз данн', 'ios', 'team lead', 'test', 'мобайл', 'системный', 'system prog'],
-        'Machine Learning Engineer': [],
+        'Machine learning-инженер': [],
 
         'Мусор': [],
         'Инженер АСУ ТП': [],
@@ -189,14 +189,14 @@ plus_words = \
                                  'angular', 'react', 'vue'],
         'Backend-разработчик': ['backend', 'бэкэнд', 'бэкенд', 'бекенд', 'бекэнд', 'back end', 'бэк энд', 'бэк енд',#soft
                                 'django', 'flask', 'laravel', 'yii', 'symfony'],
-        'Fullstack-developer': ['fullstack', 'фулстак', 'фуллтак', 'фуллстэк', 'фулстэк', 'full stack'],#soft
+        'Fullstack-разработчик': ['fullstack', 'фулстак', 'фуллтак', 'фуллстэк', 'фулстэк', 'full stack'],#soft
         'Разработчик мобильных приложений': ['mobile', 'мобайл', 'мобиль', 'мобільний'],#soft
         'IOS-разработчик': ['ios'],#soft
         'Android-разработчик': ['android', 'андроид', 'andorid', 'andoroid', 'andriod', 'andrind', 'xamarin'],#soft
         'SQL-разработчик': ['oracle', 'оракл', 'sql', ['data', 'base'], 'db', 'bd', 'бд',#soft
                                      ['баз', 'данн']],
-        'Devops-engineer': ['devops', ['develop', 'operat'], 'devоps'],#soft
-        'Data Scientist': [['data', 'scien'], ['анализ', 'данн'], ['аналит', 'данн'],#soft
+        'Devops-инженер': ['devops', ['develop', 'operat'], 'devоps'],#soft
+        'Data scientist': [['data', 'scien'], ['анализ', 'данн'], ['аналит', 'данн'],#soft
                                          # Посмотрим
                                          ['обработ', 'данн']],
         'Системный администратор': [['system', 'admin'], ['сис', 'админ'], ['cис', 'админ'],#soft
@@ -218,7 +218,7 @@ plus_words = \
         '1C-программист': ['1с', '1c', '1 c', '1 с'], #soft
         'SAP-консультант': ['sap'], #soft
         # 'Oracle-разработчик': ['oracle', 'оракл'],
-        'Разработчик игр (GameDev)': ['game', 'unity', 'игр', 'unreal'], #soft
+        'Разработчик игр': ['game', 'unity', 'игр', 'unreal'], #soft
         'Руководитель ИТ-проектов': [['тим', 'лид'], 'lead', 'руководит', 'директор', #soft
                                      'director', 'начальник', 'лидер', ['управл', 'проект'], 'керівник',
                                      'chief'],
@@ -308,7 +308,7 @@ plus_words = \
         'Ruby': ['ruby', 'руби'],
         'Sharepoint': ['sharepoint'],
         # 'SQL': ['sql'],
-        'Machine Learning Engineer': ['ml', ['machine', 'learning'], 'нейро'],
+        'Machine learning-инженер': ['ml', ['machine', 'learning'], 'нейро'],
 
         'Мусор': ['механик', 'токарь', 'конструктор', 'монтажник', 'переводчик', 'экономист', 'журналист', 'бухгалтер',
                   'аудитор', 'строитель', 'секретарь', 'электрик', 'кассир', 'инспектор', 'курьер', 'юрист', 'бригадир',
@@ -346,6 +346,6 @@ classification_dict = {
 # print(len(plus_words))  # Пропали 2 профессии
 # print(len(minus_words))
 
-rubish_list = ['Менеджер HardWare', 'Менеджер SoftWare', 'Бизнес-специалист', 'Специалист по документации', 'Pre-sale инженер', 'Цифровой специалист', 'Менеджер по работе с клиентами', 'Менеджер по работе с партнерами', 'Менеджер по развитию', 'C#', 'C C++', 'Delphi', 'JavaScript', 'Java', 'PHP', 'Python', 'Ruby', 'Sharepoint', 'E-mail маркетолог', 'Мусор', 'Менеджер в отделы', 'Инженер', 'Программист-разработчик', 'Специалист', 'Менеджер', 'Языки программирования', ]
+rubish_list = ['Системный программист', 'Менеджер HardWare', 'Менеджер SoftWare', 'Бизнес-специалист', 'Специалист по документации', 'Pre-sale инженер', 'Цифровой специалист', 'Менеджер по работе с клиентами', 'Менеджер по работе с партнерами', 'Менеджер по развитию', 'C#', 'C C++', 'Delphi', 'JavaScript', 'Java', 'PHP', 'Python', 'Ruby', 'Sharepoint', 'E-mail маркетолог', 'Мусор', 'Менеджер в отделы', 'Инженер', 'Программист-разработчик', 'Специалист', 'Менеджер', 'Языки программирования', ]
 final_prof_list = [elem for elem in list(plus_words.keys()) if elem not in rubish_list]
 print(final_prof_list)
