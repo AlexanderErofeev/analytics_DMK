@@ -8,11 +8,11 @@ minus_words = \
                                 'quality assurance', 'тимлид', '1 c', '1 с', 'баз данн', 'team lead', 'test', 'game'],
         'Системный программист': ['руководитель', '1с', '1c', '1 с', 'lead', 'тест', 'team lead', 'администратор'],
         'Инженер систем': ['руководитель', '1с', '1c', '1 с', 'lead', 'тест', 'team lead', 'администратор'],
-        '.Net-разработчик': ['manager', '1с', 'тьютор', 'директор', 'unity', 'руководитель', 'qa', '1c', 'teamlead',
+        'Desktop-разработчик': ['manager', '1с', 'тьютор', 'директор', 'unity', 'руководитель', 'qa', '1c', 'teamlead',
                                 'backend', 'препод', 'оператор', 'lead', 'игр', 'fullstack', 'бэкенд', 'тест',
                                 'director', 'leader', 'quality assurance', 'тимлид', 'тим лид', '1 c', '1 с',
                                 'баз данн', 'team lead', 'test', 'game'],
-        'Web-программист': ['manager', '1с', 'директор', 'tutor', 'unity', 'руководитель', 'qa', '1c', 'teamlead',
+        'Web-разработчик': ['manager', '1с', 'директор', 'tutor', 'unity', 'руководитель', 'qa', '1c', 'teamlead',
                             'аналитик', 'препод', 'менеджер', 'lead', 'оператор', 'дизайнер', 'тест', 'designer',
                             'leader', 'тимлид', 'тим лид', '1 c', '1 с', 'баз данн', 'team lead', 'test', 'game'],
         'Верстальщик': ['репетитор', 'manager', '1с', 'тьютор', 'директор', 'преподаватель', 'tutor', 'unity',
@@ -41,6 +41,10 @@ minus_words = \
         'Android-разработчик': ['unity', 'тимлид', 'руководитель', 'qa', 'тим лид', 'manager', 'препод', 'директор',
                                 'team lead', 'lead', 'оператор', 'дизайнер', 'teamlead', 'ремонт', 'тест', 'test',
                                 'game', 'leader'],
+        'Администратор баз данных': ['manager', '1с', 'директор', 'tutor', 'unity',
+                                     'руководитель', 'qa', '1c', 'teamlead', 'backend', 'erp', 'препод',
+                                     'lead', 'тест', 'director', 'leader', 'quality assurance', 'тимлид',
+                                     '1 c', '1 с', 'team lead', 'test', 'game'],
         'SQL-разработчик': ['manager', '1с', 'директор', 'tutor', 'unity',
                                      'руководитель', 'qa', '1c', 'teamlead', 'backend', 'erp', 'препод',
                                      'lead', 'тест', 'director', 'leader', 'quality assurance', 'тимлид',
@@ -176,8 +180,8 @@ plus_words = \
                            ['cистем', 'инженер'],
                            # Новинка
                            ['технич', 'специалист'], ['специалист', 'систем']],
-        '.Net-разработчик': ['desktop', 'десктоп', 'net'],#soft
-        'Web-программист': [['web', 'develop'], ['веб', 'разработ'], ['web', 'разработ'], ['web', 'program'],#soft
+        'Desktop-разработчик': ['desktop', 'десктоп', 'net'],#soft
+        'Web-разработчик': [['web', 'develop'], ['веб', 'разработ'], ['web', 'разработ'], ['web', 'program'],#soft
                             ['web', 'програм'], ['веб', 'програм'], ['битрикс', 'разработ'],
                             ['bitrix', 'разработ'], ['drupal', 'разработ'], ['cms', 'разработ'],
                             ['wordpress', 'разработ'], ['wp', 'разработ'], ['joomla', 'разработ'],
@@ -193,8 +197,9 @@ plus_words = \
         'Разработчик мобильных приложений': ['mobile', 'мобайл', 'мобиль', 'мобільний'],#soft
         'IOS-разработчик': ['ios'],#soft
         'Android-разработчик': ['android', 'андроид', 'andorid', 'andoroid', 'andriod', 'andrind', 'xamarin'],#soft
-        'SQL-разработчик': ['oracle', 'оракл', 'sql', ['data', 'base'], 'db', 'bd', 'бд',#soft
-                                     ['баз', 'данн']],
+        'Администратор баз данных': [['data', 'base'], 'db', 'bd', 'бд',#soft
+                                     ['баз', 'данн'], 'oracle', 'оракл', ],
+        'SQL-разработчик': ['sql'],
         'Devops-инженер': ['devops', ['develop', 'operat'], 'devоps'],#soft
         'Data scientist': [['data', 'scien'], ['анализ', 'данн'], ['аналит', 'данн'],#soft
                                          # Посмотрим
@@ -348,4 +353,4 @@ classification_dict = {
 
 rubish_list = ['Системный программист', 'Менеджер HardWare', 'Менеджер SoftWare', 'Бизнес-специалист', 'Специалист по документации', 'Pre-sale инженер', 'Цифровой специалист', 'Менеджер по работе с клиентами', 'Менеджер по работе с партнерами', 'Менеджер по развитию', 'C#', 'C C++', 'Delphi', 'JavaScript', 'Java', 'PHP', 'Python', 'Ruby', 'Sharepoint', 'E-mail маркетолог', 'Мусор', 'Менеджер в отделы', 'Инженер', 'Программист-разработчик', 'Специалист', 'Менеджер', 'Языки программирования', ]
 final_prof_list = [elem for elem in list(plus_words.keys()) if elem not in rubish_list]
-print(final_prof_list)
+# print(final_prof_list)
