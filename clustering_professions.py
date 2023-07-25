@@ -1,8 +1,7 @@
-import multiprocessing
 import numpy as np
 import pandas as pd
 import dict_words
-from global_settings_and_functions import PROCESSOR_COUNT, percent
+from global_settings_and_functions import *
 
 
 def is_tuple_in_str(tuple, str):
@@ -90,31 +89,31 @@ def efficiency_plus_minus_words_in_prof(prof_name):
     minus_words_ser.to_csv("Debug data\\Professions debug\\minus_words_in_prof.csv", header=False)
 
 
+def clustering_professions(vac_names):
+    unique_vac_names = vac_names.drop_duplicates().tolist()
+    unique_vac_values = multiprocessing_map(define_prof, unique_vac_names)
+    tr_dict = dict(zip(unique_vac_names, unique_vac_values))
+    vac_prof = vac_names.apply(lambda x: tr_dict[x])
+
+    prof_value_counts = vac_prof.value_counts()
+    print_log('Количество профессий: ' + str(len(prof_value_counts) - 1))
+
+    undefined_vac_count = prof_value_counts['Неизвестная профессия']
+    print_log(f"Распределено вакансий: {percent(len(vac_names) - undefined_vac_count, len(vac_names))}")
+    print_log(f"Количество неопределённых вакансий: {undefined_vac_count}")
+    print_log('Контрольная сумма вакансий: ' + str(prof_value_counts.sum()))
+
+    return vac_prof
+
+
 if __name__ == '__main__':
     vac_names_csv = pd.read_csv('vacancies_preprocessed.csv', low_memory=False)
-    print('Общее количество вакансий: ' + str(len(vac_names_csv.index)))
+    print_log('Общее количество вакансий: ' + str(len(vac_names_csv.index)))
 
-    unique_vac = vac_names_csv['name'].drop_duplicates().tolist()
-    with multiprocessing.Pool(PROCESSOR_COUNT) as p:
-        unique_vac_values = p.map(define_prof, unique_vac)
-    tr_dict = dict(zip(unique_vac, unique_vac_values))
-
-    vac_names_csv['prof_name'] = vac_names_csv['name'].apply(lambda x: tr_dict[x])
+    vac_prof = clustering_professions(vac_names_csv['name'])
+    vac_names_csv['prof_name'] = vac_prof
     vac_names_csv.to_csv('vacancies_classified.csv', index=False)
-
-    prof_groups_vac = vac_names_csv.groupby(['prof_name'])
-    print('Количество профессий: ' + str(len(prof_groups_vac) - 1))
-
-    undefined_vac = prof_groups_vac.get_group('Неизвестная профессия')[['name']]
-    print('Распределено вакансий: ' + percent(len(vac_names_csv.index) - len(undefined_vac.index), len(vac_names_csv.index)))
-    print('Количество неопределённых вакансий: ' + str(len(undefined_vac.index)))
-
-    count_prof_names = prof_groups_vac \
-        .apply(lambda x: len(x.index)) \
-        .sort_values(ascending=False)
-
-    count_prof_names.to_csv("count_professions_names.csv", header=False)
-    print('Контрольная сумма вакансий: ' + str(count_prof_names.sum()))
+    vac_prof.value_counts().to_csv("count_professions_names.csv", header=False)
 
     # frequency_undefined_words(30, 15).to_csv("Debug data\\Professions debug\\frequency_undefined_words.csv", header=False)
     # frequency_words(undefined_vac_with_word('разработчик')).to_csv("Debug data\\Professions debug\\castom_frequency.csv", header=False)

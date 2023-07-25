@@ -18,30 +18,33 @@ def convert_ser_to_percens(ser):
     return ser.apply(lambda el: round(el / sum, 4) if el != 0 else 0)
 
 
-if __name__ == '__main__':
-    data = pd.read_csv('vacancies_and_skill_classified.csv', usecols=['key_skills', 'grup_skills', 'prof_name', 'year'], low_memory=False)
+def get_skills_stat(data):
     data = data.groupby(['prof_name'])
-
     skills = sum_mas([list(dict.keys()) for dict in dict_skill.values()])
-    grups_skill = list(dict_skill.keys())
-
 
     skills_stat = data.apply(lambda x: gen_prof_stat(x['key_skills'], skills)).T
-    print(f"Контрольная сумма скиллов: {skills_stat.sum(axis=1).sum()}")
     skills_stat['sum'] = skills_stat.sum(axis=1)
     skills_stat = skills_stat.sort_values(by='sum', ascending=False)
-    skills_stat.apply(convert_ser_to_percens).to_csv('Results\\skills_stat.csv', index_label='Скилл')
+    return skills_stat.apply(convert_ser_to_percens)
 
+
+def get_grups_skill_stat(data):
+    data = data.groupby(['prof_name'])
+    grups_skill = list(dict_skill.keys())
 
     skills_grup_stat = data.apply(lambda x: gen_prof_stat(x['grup_skills'], grups_skill)).T
-    print(f"Контрольная групп сумма скиллов: {skills_grup_stat.sum(axis=1).sum()}")
     skills_grup_stat['sum'] = skills_grup_stat.sum(axis=1)
     skills_grup_stat = skills_grup_stat.sort_values(by='sum', ascending=False)
-    skills_grup_stat.apply(convert_ser_to_percens).to_csv('Results\\grup_skills_stat.csv', index_label='Группа скиллов')
+    return skills_grup_stat.apply(convert_ser_to_percens)
 
 
-    data = data.apply(lambda x: x.groupby(['year']))
+if __name__ == '__main__':
+    data = pd.read_csv('vacancies_and_skill_classified.csv', usecols=['key_skills', 'grup_skills', 'prof_name', 'year'], low_memory=False)
 
+    get_skills_stat(data).to_csv('Results\\skills_stat.csv', index_label='Skill')
+    get_grups_skill_stat(data).to_csv('Results\\grup_skills_stat.csv', index_label='Группа скиллов')
+
+    data = data.groupby(['prof_name']).apply(lambda x: x.groupby(['year']))
 
     data_skills = data\
         .apply(lambda x: x.apply(lambda y: convert_ser_to_percens(gen_prof_stat(y['key_skills'], skills))))\

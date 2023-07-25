@@ -1,6 +1,6 @@
 import pandas as pd
 from dict_skill import dict_skill
-from global_settings_and_functions import percent, sum_mas, sum_dict
+from global_settings_and_functions import *
 
 
 def invert_dict(input_dict):
@@ -17,7 +17,7 @@ def define_skill(skill, definition_dict):
         return 'Неизвестный навык'
 
 
-def define_vac_skills(list_skills, definition_dict):
+def define_vac_skills(list_skills, definition_dict, drop_duplicates=True):
     ans_mas = []
 
     if type(list_skills).__name__ != 'list':
@@ -28,7 +28,7 @@ def define_vac_skills(list_skills, definition_dict):
         if tr_skill != 'Неизвестный навык':
             ans_mas.append(tr_skill)
 
-    ans_mas = list(set(ans_mas))
+    ans_mas = list(set(ans_mas)) if drop_duplicates else ans_mas
     return '\n'.join(ans_mas)
 
 
@@ -39,37 +39,47 @@ def generate_skill_statistics(ser, bottom_line, file_name, all_count_for_percent
         .to_csv(f"Debug data\\Skills debug\\{file_name}", index_label='skill', header=['count', 'percent'])
 
 
-if __name__ == '__main__':
-    vac_csv = pd.read_csv('vacancies_classified.csv', low_memory=False)
-    vac_csv['key_skills'] = vac_csv['key_skills'].str.split('\n')
-
-    lists_skill_in_vac = vac_csv['key_skills'].dropna().tolist()
-    print(f"Всего вакансий с указанными скилами: {len(lists_skill_in_vac)}")
-
-    all_key_skills = sum_mas(lists_skill_in_vac)
-    global_skill_count = len(all_key_skills)
-    print(f"Всего скилов: {global_skill_count}")
-    print(f"Всего уникальных скилов: {len(set(all_key_skills))}")
-    all_key_skills_ser = pd.Series(all_key_skills)
-
+def classifying_skill(key_skills_col):
     solo_dict_skill = sum_dict(list(dict_skill.values()))
     invert_solo_dict_skill = invert_dict(solo_dict_skill)
 
+    return key_skills_col.str.split('\n').apply(lambda el: define_vac_skills(el, invert_solo_dict_skill))
+
+
+def classifying_grup_skill(skills_col):
     grup_dict_skill = {key: list(value.keys()) for key, value in dict_skill.items()}
     invert_grup_dict_skill = invert_dict(grup_dict_skill)
 
-    vac_csv['key_skills'] = vac_csv['key_skills'].apply(lambda el: define_vac_skills(el, invert_solo_dict_skill))
-    vac_csv['grup_skills'] = vac_csv['key_skills'].str.split('\n').apply(lambda el: define_vac_skills(el, invert_grup_dict_skill))
+    return skills_col.str.split('\n').apply(lambda el: define_vac_skills(el, invert_grup_dict_skill, False))
+
+
+if __name__ == '__main__':
+    vac_csv = pd.read_csv('vacancies_classified.csv', low_memory=False)
+
+    lists_skill_in_vac = vac_csv['key_skills'].str.split('\n').dropna().tolist()
+    print_log(f"Всего вакансий с указанными скилами: {len(lists_skill_in_vac)}")
+
+    all_key_skills = sum_mas(lists_skill_in_vac)
+    global_skill_count = len(all_key_skills)
+    print_log(f"Всего скилов: {global_skill_count}")
+    print_log(f"Всего уникальных скилов: {len(set(all_key_skills))}")
+    all_key_skills_ser = pd.Series(all_key_skills)
+
+    vac_csv['key_skills'] = classifying_skill(vac_csv['key_skills'])
+    vac_csv['grup_skills'] = classifying_grup_skill(vac_csv['key_skills'])
     vac_csv.to_csv('vacancies_and_skill_classified.csv', index=False)
 
     generate_skill_statistics(all_key_skills_ser.value_counts(), 0, 'skills_counts.csv', global_skill_count)
+
+    solo_dict_skill = sum_dict(list(dict_skill.values()))
+    invert_solo_dict_skill = invert_dict(solo_dict_skill)
 
     key_skills_with_definition = pd.concat([all_key_skills_ser, all_key_skills_ser.apply(lambda el: define_skill(el, invert_solo_dict_skill))], axis='columns')
     key_skills_with_definition.columns = ['skill', 'class_skill']
     distributed_skills = key_skills_with_definition.groupby(['class_skill'])
 
     undefined_skills = distributed_skills.get_group('Неизвестный навык')
-    print(f"Распределено скилов: {percent(global_skill_count - len(undefined_skills.index), global_skill_count)}")
+    print_log(f"Распределено скилов: {percent(global_skill_count - len(undefined_skills.index), global_skill_count)}")
     generate_skill_statistics(undefined_skills['skill'].value_counts(), 0, 'undefined_skills_counts.csv', global_skill_count)
 
     distributed_skills_counts = distributed_skills.apply(lambda el: len(el.index))

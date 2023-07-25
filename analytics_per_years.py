@@ -1,21 +1,26 @@
 import pandas as pd
 
-data = pd.read_csv('vacancies_classified.csv', usecols=['rub_salary', 'year', 'prof_name'])
 
-data = data.groupby(['prof_name']) \
-    .apply(lambda x: x.groupby(['year']))
+def analytics_per_years(data):
+    data = data.groupby(['prof_name']).apply(lambda x: x.groupby(['year']))
+
+    count_stat = data.apply(lambda x: x.apply(lambda y: len(y)))\
+        .fillna(0)\
+        .convert_dtypes()
+
+    salary_stat = data.apply(lambda x: x.apply(lambda y: y['rub_salary'].median() if len(y['rub_salary'].dropna().index) != 0 else 0))\
+        .fillna(0)\
+        .apply(lambda x: x.apply(lambda y: int(y)))\
+        .convert_dtypes()
+
+    return count_stat, salary_stat
 
 
-count_stat = data.apply(lambda x: x.apply(lambda y: len(y)))\
-    .fillna(0)\
-    .convert_dtypes()
+if __name__ == '__main__':
+    df_vac = pd.read_csv('vacancies_classified.csv', usecols=['rub_salary', 'year', 'prof_name'])
+    count_stat, salary_stat = analytics_per_years(df_vac)
 
-count_stat.to_csv('Results\\count_stat.csv')
-print(count_stat.sum(axis=1).sum())
+    print(count_stat.sum(axis=1).sum())
 
-salary_stat = data.apply(lambda x: x.apply(lambda y: y['rub_salary'].median() if len(y['rub_salary'].dropna().index) != 0 else 0))\
-    .fillna(0)\
-    .apply(lambda x: x.apply(lambda y: int(y)))\
-    .convert_dtypes()
-
-salary_stat.to_csv('Results\\salary_stat.csv')
+    count_stat.to_csv('Results\\count_stat.csv')
+    salary_stat.to_csv('Results\\salary_stat.csv')
