@@ -1,12 +1,13 @@
 import datetime
-import multiprocessing
 import sys
 
-PROCESSOR_COUNT = 16
+PROCESSOR_COUNT = 10
 IS_USES_MULTIPROCESSING = True
 
 # INPUT_DIRS = ['/home/hh-data-miner/data']
 INPUT_DIRS = ['../HH']
+IS_ONLY_NEW_VACANCIES = True
+PROCESSING_CHUNK_SIZE = 50000
 
 UPLOAD_URL = '...'
 UPLOAD_CHUNK_SIZE = 10000
@@ -33,13 +34,3 @@ def sum_dict(list_dict):
 def print_log(log_string, is_error=False):
     text = f"[{datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}] {log_string}"
     print(text, file=sys.stderr if is_error else sys.stdout)
-
-
-def multiprocessing_map(function, list_items):
-    if IS_USES_MULTIPROCESSING:
-        with multiprocessing.Pool(PROCESSOR_COUNT) as p:
-            csv_list = p.map(function, list_items)
-    else:
-        csv_list = list(map(function, list_items))
-
-    return csv_list

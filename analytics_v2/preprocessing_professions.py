@@ -1,7 +1,6 @@
 import math
 import pandas as pd
 import re
-from global_settings_and_functions import *
 from Currencies.get_currencies_per_year import update_currencies
 
 pd.options.mode.chained_assignment = None
@@ -11,11 +10,11 @@ OUT_FILE = 'vacancies_preprocessed.csv'
 
 
 def get_avg_salary(salary_from, salary_to):
-    if not math.isnan(salary_from) and not math.isnan(salary_to):
+    if salary_from is not pd.NA and salary_to is not pd.NA:
         return int((float(salary_from) + float(salary_to)) / 2)
-    elif not math.isnan(salary_from):
+    elif salary_from is not pd.NA:
         return int(float(salary_from))
-    elif not math.isnan(salary_to):
+    elif salary_to is not pd.NA:
         return int(float(salary_to))
     else:
         return None
@@ -43,26 +42,32 @@ def rub_salary(ser, df_currency):
 
 
 def preprocessing_professions(csv_merged):
-    print_log('Translate to lowercase and remove extra characters from names')
+    # print_log('Translate to lowercase and remove extra characters from names')
 
     csv_merged['name'] = csv_merged['name']\
         .str.lower()\
         .apply(lambda x: ' '.join(re.sub(r"[^\w+#]|[_023456789]", ' ', x).split()))
 
     csv_merged = csv_merged[csv_merged['name'].str.len() != 0]
-    print_log(f"Count vacancies after deleting vacancies with empty \'name\': {len(csv_merged.index)}")
+    # print_log(f"Count vacancies after deleting vacancies with empty \'name\': {len(csv_merged.index)}")
+
+    csv_merged['description'] = csv_merged['description'].str.lower()
+    csv_merged['description'] = csv_merged['description'].str.replace(r"<[^>]+>", ' ', regex=True)
+    csv_merged["description"] = csv_merged['description'].str.replace(r'[^\w\s+#-]|[_]', ' ', regex=True)
+    csv_merged['description'] = csv_merged['description'].str.replace(r'[\s]+', ' ', regex=True)
+    csv_merged['description'] = csv_merged['description'].str.strip()
 
     csv_merged['key_skills'] = csv_merged['key_skills'].str.lower()
     csv_merged['date'] = csv_merged['published_at'].str[:10]
     csv_merged['published_at'] = csv_merged['published_at'].str[:7]
 
-    print_log('Convert salary into rubles')
+    # print_log('Convert salary into rubles')
     df_currency = update_currencies()
     data_for_rub_salary = csv_merged[['salary_from', 'salary_to', 'salary_currency', 'published_at']]
-    csv_merged['salary'] = data_for_rub_salary.apply(lambda ser: rub_salary(ser, df_currency), axis=1)
+    csv_merged['salary'] = data_for_rub_salary.apply(lambda ser: rub_salary(ser, df_currency), axis=1).astype('Int64')
 
-    print_log(f"Count vacancies with salary: {csv_merged['salary_currency'].notna().sum()}")
-    print_log(f"Count vacancies with salary converted into rubles: {csv_merged['salary'].notna().sum()}")
+    # print_log(f"Count vacancies with salary: {csv_merged['salary_currency'].notna().sum()}")
+    # print_log(f"Count vacancies with salary converted into rubles: {csv_merged['salary'].notna().sum()}")
 
     return csv_merged.drop(['salary_from', 'salary_to', 'salary_currency', 'published_at'], axis='columns')
 

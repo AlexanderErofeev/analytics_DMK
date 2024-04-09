@@ -22,6 +22,22 @@ def define_skill(skill, definition_dict):
         return UNKNOWN_TITLE
 
 
+def get_description_skills(description: str, solo_dict_skill):
+    if description is pd.NA:
+        return pd.NA
+
+    description_split_set = set(description.split())
+    ans_skills = []
+
+    for skill, words in solo_dict_skill.items():
+        for sub_words in words:
+            if sub_words.issubset(description_split_set):
+                ans_skills.append(skill)
+                break
+
+    return '\n'.join(ans_skills)
+
+
 def define_vac_skills(list_skills, definition_dict, drop_duplicates=True):
     ans_mas = []
 
@@ -37,11 +53,27 @@ def define_vac_skills(list_skills, definition_dict, drop_duplicates=True):
     return '\n'.join(ans_mas)
 
 
-def classifying_skill(key_skills_col):
+def combine_skills(ser):
+    ser = ser.to_dict()
+    key_skills = [] if ser['key_skills'] is None or ser['key_skills'] == '' else ser['key_skills'].split('\n')
+    if '' in key_skills:
+        print(key_skills)
+    description_skills = [] if ser['key_skills_description'] is pd.NA or ser['key_skills_description'] == '' else ser['key_skills_description'].split('\n')
+    if '' in description_skills:
+        print(description_skills)
+    return '\n'.join(list(set(key_skills + description_skills)))
+
+
+def classifying_skill(key_skills_col, description_col):
     solo_dict_skill = sum_dict(list(dict_skill.values()))
     invert_solo_dict_skill = invert_dict(solo_dict_skill)
 
-    return key_skills_col.str.split('\n').apply(lambda el: define_vac_skills(el, invert_solo_dict_skill))
+    key_skills = key_skills_col.str.split('\n').apply(lambda el: define_vac_skills(el, invert_solo_dict_skill))
+    solo_dict_skill = {skill: [set(word.split()) for word in words] for skill, words in solo_dict_skill.items()}
+    key_skills_description = description_col.apply(lambda d: get_description_skills(d, solo_dict_skill))
+
+    df = pd.DataFrame({'key_skills': key_skills, 'key_skills_description': key_skills_description})
+    return df.apply(combine_skills, axis=1)
 
 
 def classifying_grup_skill(skills_col):

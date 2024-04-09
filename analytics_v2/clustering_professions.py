@@ -26,18 +26,18 @@ def define_prof(vac_name):
 
 def clustering_professions(vac_names):
     unique_vac_names = vac_names.drop_duplicates().tolist()
-    unique_vac_values = multiprocessing_map(define_prof, unique_vac_names)
+    unique_vac_values = list(map(define_prof, unique_vac_names))
     tr_dict = dict(zip(unique_vac_names, unique_vac_values))
     vac_prof = vac_names.apply(lambda x: tr_dict[x])
 
     if len(vac_prof.index) > 0:
         prof_value_counts = vac_prof.value_counts()
-        print_log(f"Count professions: {len(prof_value_counts) - 1}")
+        # print_log(f"Count professions: {len(prof_value_counts) - 1}")
 
         undefined_vac_count = prof_value_counts[UNKNOWN_TITLE] if UNKNOWN_TITLE in prof_value_counts else 0
-        print_log(f"Distributed vacancies: {percent(len(vac_names) - undefined_vac_count, len(vac_names))}")
-        print_log(f"Count undefined vacancies: {undefined_vac_count}")
-        print_log(f"Checksum vacancies: {prof_value_counts.sum()}")
+        # print_log(f"Distributed vacancies: {percent(len(vac_names) - undefined_vac_count, len(vac_names))}")
+        # print_log(f"Count undefined vacancies: {undefined_vac_count}")
+        # print_log(f"Checksum vacancies: {prof_value_counts.sum()}")
 
     return vac_prof
 

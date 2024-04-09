@@ -21,7 +21,7 @@ def serialize_vacancy(row):
         vac['salary'] = int(row['salary'])
 
     if type(row['key_skills']) == str and type(row['grup_skills']) == str:
-        tuples_skills =  zip(row['key_skills'].split('\n'), row['grup_skills'].split('\n'))
+        tuples_skills = zip(row['key_skills'].split('\n'), row['grup_skills'].split('\n'))
         vac['skills'] = [{'title': title, 'group': group} for title, group in tuples_skills]
 
     return vac
